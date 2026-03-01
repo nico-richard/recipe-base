@@ -1,12 +1,12 @@
-import { Router } from "@solidjs/router";
-import { FileRoutes } from "@solidjs/start/router";
-import { Suspense } from "solid-js";
-import "./app.css";
+import { Router } from '@solidjs/router'
+import { FileRoutes } from '@solidjs/start/router'
+import { Suspense } from 'solid-js'
+import './app.sass'
 
 export default function App() {
   return (
     <Router
-      root={props => (
+      root={(props) => (
         <>
           <a href="/">Index</a>
           <a href="/about">About</a>
@@ -16,5 +16,5 @@ export default function App() {
     >
       <FileRoutes />
     </Router>
-  );
+  )
 }
