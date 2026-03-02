@@ -1,12 +1,11 @@
-import React from 'react'
-import { For } from 'solid-js'
+import { For, ParentComponent } from 'solid-js'
 import { useNavigate } from '@solidjs/router'
 import './Navbar.sass'
 
 interface NavbarProps {
   routes: { name: string; url: string }[]
 }
-const Navbar = (props: NavbarProps) => {
+const Navbar: ParentComponent<NavbarProps> = (props) => {
   const navigate = useNavigate()
   return (
     <div class={'container'}>

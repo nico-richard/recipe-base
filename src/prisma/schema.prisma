@@ -15,7 +15,7 @@ model Recipe {
 
 model RecipeIngredient {
   id           Int        @id @default(autoincrement())
-  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   recipeId     Int
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
   ingredientId Int

@@ -1,11 +1,32 @@
+@use "sass:color"
+
+$eggshell: #f4f1deff
+$burnt-peach: #e07a5fff
+$twilight-indigo: #3d405bff
+$muted-teal: #81b29aff
+$apricot-cream: #f2cc8fff
 :root
-  --eggshell: #f4f1deff
-  --burnt-peach: #e07a5fff
-  --twilight-indigo: #3d405bff
-  --muted-teal: #81b29aff
-  --apricot-cream: #f2cc8fff
+  // Background hierarchy
+  --bg-main: #2f3148
+  --bg-surface: #{ $twilight-indigo }
+  --bg-elevated: #464a6a
 
+  // Text
+  --text-primary: #{ $eggshell }
+  --text-secondary: rgba(244, 241, 222, 0.7)
 
-*
-  background-color: var(--twilight-indigo)
-  color: var(--burnt-peach)
+  // Accent
+  --accent: #{ $muted-teal }
+  --accent-hover: #{color.adjust($muted-teal, $lightness: -10%)}
+
+  // Borders
+  --border: rgba(244, 241, 222, 0.08)
+
+  --danger: #{ $burnt-peach }
+
+  --highlight: #{ $apricot-cream }
+
+body
+  background-color: var(--bg-main)
+  color: var(--text-primary)
+  text-align: center
