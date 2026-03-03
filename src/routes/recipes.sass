@@ -1,5 +1,81 @@
-.recipes
+@use "../breakpoints"
+
+.recipe-container
+  position: relative
+  margin: 2rem
+  @media (max-width: breakpoints.$sm)
+    margin: 1rem
+
+  .title
+    margin: 0
+
+  .recipes
+    margin: 3rem 0
+    display: flex
+    justify-content: space-evenly
+    flex-wrap: wrap
+    gap: 2rem
+    @media (max-width: breakpoints.$sm)
+      gap: 1rem
+      margin: 2rem 0
+
+  .button
+    position: absolute
+    top: 0
+    right: 0
+    @media (max-width: breakpoints.$sm)
+      position: inherit
+      margin: 1rem
+
+  .search-recipe
+    margin-top: 1rem
+    width: 400px
+    @media (max-width: breakpoints.$md)
+      width: 300px
+    @media (max-width: breakpoints.$sm)
+      width: 200px
+      margin-top: 0
+
+.modal-content
   display: flex
-  justify-content: space-evenly
-  flex-wrap: wrap
-  gap: 1rem
+  flex-direction: column
+  gap: 2rem
+  padding: 3rem
+  margin: 1rem
+  width: 90%
+  max-width: 500px
+  background-color: var(--bg-surface)
+  border-radius: 5px
+
+  h1
+    margin: 0
+
+  .buttons
+    display: flex
+    justify-content: space-evenly
+    gap: .5rem
+
+    .button
+      flex-grow: 1
+
+  .ingredients, .steps
+    display: flex
+    flex-direction: column
+    gap: 0.5rem
+    width: 100%
+
+    .initial
+      display: flex
+      gap: 0.5rem
+
+      input
+        flex: 1
+
+.modal-backdrop
+  position: fixed
+  inset: 0
+  display: flex
+  justify-content: center
+  align-items: center
+  z-index: 1000
+  background-color: rgba(0, 0, 0, 0.5)

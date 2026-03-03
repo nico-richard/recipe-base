@@ -7,26 +7,41 @@ $muted-teal: #81b29aff
 $apricot-cream: #f2cc8fff
 :root
   // Background hierarchy
-  --bg-main: #2f3148
-  --bg-surface: #{ $twilight-indigo }
-  --bg-elevated: #464a6a
+  --bg-deep: #{color.adjust($twilight-indigo, $lightness: -20%)}
+  --bg-main: #{color.adjust($twilight-indigo, $lightness: -10%)}
+  --bg-surface: #{$twilight-indigo}
+  --bg-elevated: #{color.adjust($twilight-indigo, $lightness: +10%)}
 
   // Text
-  --text-primary: #{ $eggshell }
-  --text-secondary: rgba(244, 241, 222, 0.7)
+  --text-primary: #{$eggshell}
+  --text-secondary: #{color.adjust($twilight-indigo, $lightness: +50%)}
 
   // Accent
-  --accent: #{ $muted-teal }
+  --accent: #{$muted-teal}
   --accent-hover: #{color.adjust($muted-teal, $lightness: -10%)}
 
   // Borders
   --border: rgba(244, 241, 222, 0.08)
 
-  --danger: #{ $burnt-peach }
+  --danger: #{$burnt-peach}
 
-  --highlight: #{ $apricot-cream }
+  --highlight: #{$apricot-cream}
+
+*
+  box-sizing: border-box
 
 body
-  background-color: var(--bg-main)
+  margin: 0
+  padding: 0
+  font-family: Helvetica, sans-serif
+  background-color: var(--bg-surface)
   color: var(--text-primary)
   text-align: center
+
+input
+  outline: none
+  border: none
+  padding: 10px 20px
+  background-color: var(--text-primary)
+  color: var(--bg-main)
+  border-radius: 5px

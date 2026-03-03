@@ -10,29 +10,45 @@ const RecipeCard: ParentComponent<RecipeProps> = (
   props
 ) => {
   return (
-    <div class={'recipe'}>
-      <h3>{props.recipe.name}</h3>
-      <div class="ingredients">
-        <For each={props.recipe.ingredients}>
-          {(ingredient) => (
-            <p>
-              {ingredient.ingredient.name}
-              {ingredient.quantity && ' : '}
-              {ingredient.quantity} {ingredient.unit}
-            </p>
-          )}
-        </For>
-      </div>
-      <div class="steps">
-        <For each={props.recipe.steps}>
-          {(step) => (
-            <p>
-              {step.order} - {step.description}
-            </p>
-          )}
-        </For>
-      </div>
-    </div>
+    <article class="recipe-card">
+      <header class="recipe-header">
+        <h3>{props.recipe.name}</h3>
+      </header>
+      <section class="recipe-section">
+        <h4>Ingrédients</h4>
+        <ul>
+          <For each={props.recipe.ingredients}>
+            {(ingredient) => (
+              <li>
+                <span class="name">
+                  {ingredient.ingredient.name}
+                </span>
+                {ingredient.quantity && (
+                  <span class="highlight">
+                    {ingredient.quantity} {ingredient.unit}
+                  </span>
+                )}
+              </li>
+            )}
+          </For>
+        </ul>
+      </section>
+      <section class="recipe-section">
+        {props.recipe.steps.length > 0 && (
+          <h4>Préparation</h4>
+        )}
+        <ol>
+          <For each={props.recipe.steps}>
+            {(step) => (
+              <li>
+                <span class="highlight">{step.order}</span>{' '}
+                <span>{step.description}</span>
+              </li>
+            )}
+          </For>
+        </ol>
+      </section>
+    </article>
   )
 }
 
