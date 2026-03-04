@@ -11,6 +11,8 @@ model Recipe {
   name        String
   ingredients RecipeIngredient[]
   steps       Step[]
+  type        Type?              @relation(fields: [typeId], references: [id])
+  typeId      Int?
 }
 
 model RecipeIngredient {
@@ -31,8 +33,14 @@ model Ingredient {
 
 model Step {
   id          Int    @id @default(autoincrement())
-  recipe      Recipe @relation(fields: [recipeId], references: [id])
+  recipe      Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   recipeId    Int
   order       Int
   description String
+}
+
+model Type {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  recipes Recipe[]
 }

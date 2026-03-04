@@ -5,6 +5,7 @@ import RecipeCard from '~/components/RecipeCard'
 import { RecipeWithContent } from '~/types/recipe.model'
 import './recipes.sass'
 import { Portal } from 'solid-js/web'
+import { Type } from '@prisma/client'
 
 export default function Recipes() {
   const baseUrl = getBaseUrl()
@@ -14,18 +15,27 @@ export default function Recipes() {
     const response = await fetch(`${baseUrl}/api/recipes`)
     return response.json()
   }
+  const getAllTypes = async (): Promise<Type[]> => {
+    const response = await fetch(`${baseUrl}/api/types`)
+    return response.json()
+  }
   const [recipes] = createResource(getAllRecipes)
+  const [types] = createResource(getAllTypes)
   const [recipeSearch, setRecipeSearch] = createSignal<
     string | null
   >(null)
   const [displayAddRecipeModal, setDisplayAddRecipeModal] =
-    createSignal<boolean>(true)
+    createSignal<boolean>(false)
   const [newIngredients, setNewIngredients] = createSignal<
     { name: string; quantity: number }[]
   >([])
   const [newSteps, setNewSteps] = createSignal<
     { description: string; order: number }[]
   >([])
+  const [selectedTypes, setSelectedTypes] = createSignal<
+    number[]
+  >([])
+  setSelectedTypes(types()?.map((type) => type.id) ?? [])
 
   const handleSearchInputChange = (
     e: InputEvent & {
@@ -188,6 +198,7 @@ export default function Recipes() {
       )}
       <h1 class={'title'}>Recettes</h1>
       <Button
+        classes={['add-recipe-button']}
         onClick={() => setDisplayAddRecipeModal(true)}
       >
         Ajouter
@@ -198,16 +209,51 @@ export default function Recipes() {
         placeholder="Rechercher une recette..."
         onInput={(e) => handleSearchInputChange(e)}
       />
+      <div class="types">
+        <For each={types()}>
+          {(t) => (
+            <Button
+              styles={{
+                'background-color':
+                  selectedTypes()?.includes(t.id)
+                    ? 'var(--bg-main)'
+                    : 'var(--bg-elevated)',
+              }}
+              onClick={() => {
+                if (!selectedTypes()?.includes(t.id)) {
+                  setSelectedTypes([
+                    ...(selectedTypes() ?? []),
+                    t.id,
+                  ])
+                } else {
+                  setSelectedTypes(
+                    selectedTypes()?.filter(
+                      (tId) => t.id !== tId
+                    ) ?? []
+                  )
+                }
+              }}
+            >
+              {t.name}
+            </Button>
+          )}
+        </For>
+      </div>
       <div class="recipes">
         <For
-          each={recipes()?.filter((r) => {
-            return (
-              !recipeSearch() ||
-              r.name
-                .toLowerCase()
-                .includes(recipeSearch()!.toLowerCase())
-            )
-          })}
+          each={recipes()
+            ?.filter((r) => {
+              if (!r.type) return true
+              return selectedTypes().includes(r.type.id)
+            })
+            .filter((r) => {
+              return (
+                !recipeSearch() ||
+                r.name
+                  .toLowerCase()
+                  .includes(recipeSearch()!.toLowerCase())
+              )
+            })}
         >
           {(recipe) => <RecipeCard recipe={recipe} />}
         </For>

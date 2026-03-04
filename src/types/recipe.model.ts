@@ -4,5 +4,6 @@ export type RecipeWithContent = Prisma.RecipeGetPayload<{
   include: {
     ingredients: { include: { ingredient: true } }
     steps: true
+    type: true
   }
 }>

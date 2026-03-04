@@ -1,4 +1,5 @@
 import { prisma } from '~/prisma/prisma'
+import { Recipe } from '@prisma/client'
 
 export const createRecipes = async (body: any) => {
   const recipes = Array.isArray(body) ? body : [body]
@@ -9,11 +10,12 @@ export const createRecipes = async (body: any) => {
 }
 
 const createSingleRecipe = async (recipe: any) => {
-  const existing = await prisma.recipe.findFirst({
-    where: { name: recipe.name },
-  })
+  const existing: Recipe | null =
+    await prisma.recipe.findFirst({
+      where: { name: recipe.name },
+    })
   if (existing) {
-    throw new Error(
+    console.error(
       `Recipe with name "${recipe.name}" already exists`
     )
   }
@@ -25,6 +27,12 @@ const createSingleRecipe = async (recipe: any) => {
       },
       steps: {
         create: recipe.steps,
+      },
+      type: {
+        connectOrCreate: {
+          where: { name: recipe.type.name },
+          create: { name: recipe.type.name },
+        },
       },
     },
     include: {

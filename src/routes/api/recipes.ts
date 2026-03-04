@@ -7,6 +7,7 @@ export const GET = async () => {
     include: {
       ingredients: { include: { ingredient: true } },
       steps: true,
+      type: true,
     },
   })
   return json(recipe)

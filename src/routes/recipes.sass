@@ -6,20 +6,30 @@
   @media (max-width: breakpoints.$sm)
     margin: 1rem
 
+  .types
+    display: flex
+    align-items: center
+    gap: 1rem
+    .button
+      background-color: var(--bg-elevated)
+      color: unset
+    & .active
+      background-color: var(--bg-elevated)
+
   .title
     margin: 0
 
   .recipes
     margin: 3rem 0
     display: flex
-    justify-content: space-evenly
+    justify-content: flex-start
     flex-wrap: wrap
     gap: 2rem
     @media (max-width: breakpoints.$sm)
       gap: 1rem
       margin: 2rem 0
 
-  .button
+  .add-recipe-button
     position: absolute
     top: 0
     right: 0
